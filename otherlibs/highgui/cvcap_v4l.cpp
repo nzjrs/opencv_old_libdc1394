@@ -251,16 +251,7 @@ struct buffer
   void *  start;
   size_t  length;
 };
-
 static unsigned int n_buffers = 0;
-
-/* Additional V4L2 pixelformats support for Sonix SN9C10x base webcams */
-#ifndef V4L2_PIX_FMT_SBGGR8
-#define V4L2_PIX_FMT_SBGGR8  v4l2_fourcc('B','A','8','1') /* 8 BGBG.. GRGR.. */
-#endif
-#ifndef V4L2_PIX_FMT_SN9C10X
-#define V4L2_PIX_FMT_SN9C10X  v4l2_fourcc('S','9','1','0') /* SN9C10x cmpr. */
-#endif
 
 typedef struct CvCaptureCAM_V4L
 {
