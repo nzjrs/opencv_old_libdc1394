@@ -12,7 +12,7 @@ EXTRA_DIST = \
 INCLUDES = -I. -I$(top_srcdir)/cxcore/include \
     -I$(top_srcdir)/cv/include @GTHREAD_CFLAGS@ @GTK_CFLAGS@ \
     @GSTREAMER_CFLAGS@ @QUICKTIME_CFLAGS@ @CARBON_CFLAGS@    \
-    @UNICAP_PACKAGE_CFLAGS@ @UCIL_PACKAGE_CFLAGS@
+    @UNICAP_PACKAGE_CFLAGS@ @UCIL_PACKAGE_CFLAGS@ @LIBV4L_CFLAGS@
 
 noinst_HEADERS     = \
     _highgui.h bitstrm.h grfmt_base.h grfmt_bmp.h \
@@ -105,4 +105,4 @@ libhighgui_la_LIBADD  = \
     $(top_builddir)/cv/src/libcv.la         \
     @GTHREAD_LIBS@ @GTK_LIBS@ @GSTREAMER_LIBS@ @IMAGELIBS@ @FFMPEGLIBS@   \
     @IEEE1394LIBS@ @QUICKTIME_LIBS@ @CARBON_LIBS@ @XINE_LIBS@ @LTLIBOBJS@ \
-    @UNICAP_PACKAGE_LIBS@ @UCIL_PACKAGE_LIBS@
+    @UNICAP_PACKAGE_LIBS@ @UCIL_PACKAGE_LIBS@ @LIBV4L_LIBS@
