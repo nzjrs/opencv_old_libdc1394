@@ -335,7 +335,7 @@ static int xioctl( int fd, int request, void *arg)
   int r;
 
 
-  do r = ioctl (fd, request, arg);
+  do r = v4l2_ioctl (fd, request, arg);
   while (-1 == r && EINTR == errno);
 
   return r;
@@ -463,7 +463,7 @@ static int try_init_v4l2(CvCaptureCAM_V4L* capture, char *deviceName)
   // Test device for V4L2 compability
 
   /* Open and test V4L2 device */
-  capture->deviceHandle = open (deviceName, O_RDWR /* required */ | O_NONBLOCK, 0);
+  capture->deviceHandle = v4l2_open (deviceName, O_RDWR /* required */ | O_NONBLOCK, 0);
   
 
 
@@ -2667,11 +2667,12 @@ static void icvCloseCAM_V4L( CvCaptureCAM_V4L* capture ){
          free(capture->mmaps);
        if (capture->memoryMap)
          munmap(capture->memoryMap, capture->memoryBuffer.size);
-
+       if (capture->deviceHandle != -1) 
+         close(capture->deviceHandle);
      }
      else {
        capture->type = V4L2_BUF_TYPE_VIDEO_CAPTURE;
-       if (ioctl(capture->deviceHandle, VIDIOC_STREAMOFF, &capture->type) < 0) {
+       if (xioctl(capture->deviceHandle, VIDIOC_STREAMOFF, &capture->type) < 0) {
            perror ("Unable to stop the stream.");
        }
 
@@ -2682,12 +2683,12 @@ static void icvCloseCAM_V4L( CvCaptureCAM_V4L* capture ){
            }
        }
 
+       if (capture->deviceHandle != -1) 
+         v4l2_close(capture->deviceHandle);
      }
 
-     if (capture->deviceHandle != -1) 
-       close(capture->deviceHandle);
-
-     if (capture->frame.imageData) cvFree(&capture->frame.imageData);
+     if (capture->frame.imageData)
+       cvFree(&capture->frame.imageData);
       //cvFree((void **)capture);
    }
 };
