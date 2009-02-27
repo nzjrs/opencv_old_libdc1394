@@ -6,13 +6,7 @@ AM_CXXFLAGS=@DEF_CXXFLAGS@
 # tell make where aclocal finds its files in Maintainer Mode 
 ACLOCAL_AMFLAGS = -I ./autotools/aclocal
 
-## Any directories that you want built and installed should go here.
-if BUILD_APPS
-  APPS_DIR = apps
-else
-  APPS_DIR =
-endif
-SUBDIRS = cxcore cv cvaux ml otherlibs utils interfaces $(APPS_DIR) tests samples data docs
+SUBDIRS = cxcore cv cvaux ml otherlibs utils interfaces
 
 # All the rest of the distributed files
 #EXTRA_DIST = THANKS COPYING INSTALL README NEWS ChangeLog \
