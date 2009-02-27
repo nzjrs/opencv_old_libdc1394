@@ -1,0 +1,17 @@
+#include <cv.h>
+#include <dlfcn.h>
+
+CvBox2D cvMinAreaRect2(const void* points, CvMemStorage* storage) {
+    void *fptr;
+    CvBox2D retval, *temp;
+
+    fptr = dlsym(_Chcv_handle, "cvMinAreaRect2_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return retval;
+    }
+    dlrunfun(fptr, &temp,cvMinAreaRect2, points, storage);
+    retval=*temp;
+    free(temp);
+    return retval;
+}

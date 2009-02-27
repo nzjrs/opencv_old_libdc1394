@@ -1,0 +1,17 @@
+#include <cv.h>
+#include <dlfcn.h>
+
+CvSize cvGetSize(const CvArr* arr) {
+    void *fptr;
+    CvSize retval, *temp;
+
+    fptr = dlsym(_Chcv_handle, "cvGetSize_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return retval;
+    }
+    dlrunfun(fptr, &temp,cvGetSize, arr);
+    retval = *temp;
+    free(temp);
+    return retval;
+}

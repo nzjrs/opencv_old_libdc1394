@@ -1,0 +1,12 @@
+int cvGetErrInfo(char** errcode_desc, char** description, char** filename, int* line) {
+    void *fptr;
+    int retval;
+
+    fptr = dlsym(_Chcv_handle, "cvGetErrInfo_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return -1;
+    }
+    dlrunfun(fptr, &retval, cvGetErrInfo, errcode_desc, description, filename, line);
+    return retval;
+}

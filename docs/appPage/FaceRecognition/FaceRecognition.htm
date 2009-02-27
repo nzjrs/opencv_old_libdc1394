@@ -1,0 +1,210 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<html><head>
+<link rel="STYLESHEET" href="opencvref.css" charset="ISO-8859-1" type="text/css">
+<title>HMM Face Recognition Tool</title>
+</head><body>
+
+<CENTER><TABLE CELLSPACING=0 CELLPADDING=5 WIDTH="90%" BGCOLOR="#6A9BED" NOSAVE >
+<TR NOSAVE>
+  <TD NOSAVE>
+    <CENTER><I><FONT COLOR="#000000"><FONT SIZE=+4>Face Recognition Tool</FONT></FONT></I></CENTER>
+  </TD>
+</TR>
+  </TABLE></CENTER>
+
+
+<P>This face recognition tool gives the computer the ability to
+  recognize a face from image files (BMP format) or directly from an USB
+camera. The system requirements for this application are a Pentium&reg
+  processor-based computer and Microsoft* Windows* NT 4.0, 98, or 2000.  The face
+  recognition uses <a href="../../ref/OpenCVRef_ObjectRecognition.htm#ch5_hmm">OpenCV code</a>
+  for embedded hidden Markov model. The approach is described
+  in <a href="../../papers/avbpa99.ps">"Face recognition using an embedded HMM"</A> paper.
+
+<h1>1. Navigation</h1>
+
+<h2>Main Window</h2>
+
+<p>At startup, application tries to locate USB camera.
+If succeeded the main application window will appear:</p>
+<p><img src="image003.jpg"></a></p>
+<p>There are two panes or views - camera view on the right and
+face database on the left. Initially, no database is loaded.</p>
+
+<h2>Toolbar elements.</h2>
+
+Most of the actions are done by pressing toolbar buttons, namely:
+
+<p><img src = "image005.png" align = "left"> - create new face database. Current base will be saved to disk.</a></p>
+<p><img src = "image007.png" align = "left"> - open face database (stored in txt file) or open BMP file.</a></p>
+<p><img src = "image009.png" align = "left"> - specify current face database parameters.</a></p>
+<p><img src = "image011.png" align = "left"> - add face into face database.</a></p>
+<p><img src = "image013.png" align = "left"> - delete face from database.</a></p>
+<p><img src = "image015.png" align = "left"> - zoom face database images.</a></p>
+<p><img src = "image017.png" align = "left"> - decimate face database images.</a></p>
+<p><img src = "image019.png" align = "left"> - pause/resume camera capture.</a></p>
+<p><img src = "image021.png" align = "left"> - specify camera resolution.</a></p>
+<p><img src = "image023.png" align = "left"> - adjust video quality parameters.</a></p>
+<p><img src = "image025.png" align = "left"> - select whole image in Camera view.</a></p>
+<p><img src = "image027.png" align = "left"> - train HMM(s).</a></p>
+<p><img src = "image029.png" align = "left"> - recognize face, selected in camera view.</a></p>
+<p><img src = "image031.png" align = "left"> - delete all HMM information for face base.</a></p>
+<p><img src = "image033.png" align = "left"> - about HMMDemo.</a></p>
+
+<h2>Camera View.</h2>
+
+<p>Initially camera view contents picture from camera.
+Button <img src="image019.png"></a> pauses/resumes capture.</p>
+<p>User can specify rectangular image region on camera view
+using mouse (please begin selecting region from top left corner and finish at
+right bottom corner to avoid crashes).
+Whole image can be selected by <img src="image025.png"></a> button.</a></p>
+<p>Selected rectangular region can be added into database using
+<img src="image011.png"></a> button or recognized using
+<img src="image029.png"></a> button.</p>
+<p>Camera view can also content image from BMP file. BMP file
+can be opened by <img src="image007.png"> button.</p>
+
+<h2>Database View.</h2>
+
+<p>When face database is opened “Database view” contents images from this base.
+Base view can be stated in 2 modes: “all mode” and “person mode”.</p>
+<p>In “all mode”, for every person, stored in database, only one picture is shown.
+This situation is shown below.</p>
+<p><img src="image040.jpg"></a></p>
+<p>
+<p>In “person mode” all faces of one person are shown.
+This is depicted below.</p>
+<p><img src="image042.jpg"></a></p>
+
+<p>
+<em>How to switch between “all mode” and “person mode?</em>
+<ul>
+<li>To switch from “all mode” to “person mode” double click on image of person you are interested.
+<li>To switch from “person mode” to “all mode” double click on free (not image) space of base view.
+</ul>
+</p>
+
+<h1>2. Creating face base.</h1>
+At startup, application creates empty database.
+By default, new base is placed in <em>untitled_base.txt</em> file.
+To specify new database file press <img src="image009.png"></a> button
+and fill fields of following dialog</p>
+<p align="center"><img src="image046.png"></a></p>
+
+<p>Type filename and some signature in specified fields.</p>
+<p>Now you can add faces into base.</p>
+<p>Select region with new face and press <img src = "image011.png"</a> button.</p>
+
+<p>If “base view” is in “person mode”, face will be added to person feces list.</p>
+
+<p>If “base view” in “all mode” you can be asked to specify person name.
+You can choose name from list of existing names
+(in this case image will join corresponding person images)
+or type new name (in this case new person with specified name will be created)</p>
+
+<p>You can always delete any image or any person from base.
+For this purposes click on image or person you want to delete and press
+<img src = "image013.png"></a> button.</p>
+
+<p>When you perform add/delete operations, database saves automatically all your changes.</p>
+
+<h1>3. Training/Recognition.</h2>
+
+<p>When you've collected several persons and several photos present each one,
+you can train HMMs of every person. You can do it both in “all mode” and “person mode”.</p>
+
+<p>To train HMMs of all persons switch to “all mode” and press
+<img src = "image027.png"></a> button.
+All untrained HMMs will be trained (clock-cursor will be shown during training process).</p>
+
+<p>To train HMM of concrete person switch to “person mode” and  press
+<img src = "image027.png"></a> button.
+HMM of the current person will be trained and the changing segmentation of the first image
+of the person will be rendered.</p>
+
+<p>Note, than you add/delete person images, corresponding HMM becomes untrained,
+and after all changes user must retrain all untrained HMMs.</p>
+
+<p>If all HMMs are trained you can try to recognize somebody. To do this
+<ol>
+<li>Select face region in “camera view” (from camera of BMP file)
+<li>Press  <img src = "image029.png"></a> button.
+</ol>
+
+<p>Result of recognition will appear as message box with 3 person names.
+First name will correspond to most similar person etc. “Database view” will be switched into
+“all mode” and most similar person will be highlighted with magenta rectangle.</p>
+<p><img src="image053.jpg"></a></p>
+
+
+<h1>4. Batch recognition.</h1>
+
+<p>To demonstrate recognition rate of eHMM technique the batch recognition was implemented in HMMDemo.</p>
+<p>For batch recognition you must have 2 face bases: one as training base and other
+as base for recognition. Both bases must be “personally” equal,
+i.e. base for recognition must consist of persons,
+which present in training base (true matching is made by names).</p>
+<p>
+Here is scenario of batch recognition.
+<ol>
+<li>Create first face base in usual way. Save it.
+<li>Create second base, which consists of people from first base (names must be equal in both bases), using another images. Save it.
+<li>Load first base and train it.
+<li>Go menu item “Options->Recognize another base”. You will be prompted to define .txt file, which is file of base you want recognize. Choose the base and recognition starts.
+<li>Recognition can take much time with large base. Be patient during cursor is “clock”. In the end of recognition massage box will appear. It will report how many images were processed and successfully recognized.
+</ol>
+
+
+<h1>5. HMMDemo settings</h1>
+
+<p>There are several types of settings in HMMDemo concerning use of HMMs.<br>
+To obtain settings property sheet go to Options->Settings item of menu.</p>
+
+<p>Presently we have the following types of parameters.</p>
+
+<p>1) Sampling parameters</p>
+<p><img src="image055.png"></a></p>
+
+<p>2) HMM parameters</p>
+<p><img src="image057.png"></a></p>
+<p>Number of checked checkboxes = number of superstates of HMM.<br>
+Value in editbox near checkbox is number of states within corresponding superstate.<br>
+All internal states of HMM have the same number of component of Gaussian mixture (here 3)</p>
+
+<p>3) Other parameters</o>
+<p><img src="image059.png"></a></p>
+<p>In HMM face recognition it is important that face images must have not very different sizes.
+So we must scale images, when we train or recognize.
+Above dialog allows to specify what scaling will be used.
+<ul>
+<li>If “Width” box is checked and “Height” is not checked, then all images will be scaled to have specified width, height of every image will be scaled proportionally.
+<li>If “Height” box is checked and “Width” is not checked, then all images will be scaled to have specified height, width of every image will be scaled proportionally.
+<li>If “Width” box is checked and “Height” is checked, then all images will be scaled to have specified width and specified height.
+</ul>
+“Suppress intensity” flag allows not considering lowest DCT coefficient. This can help in case of different illumination conditions in training images and tested image.
+
+
+<h1>6. Working with settings.</h1>
+<ol>
+<li>When you start/exit application, it loads/stores settings from/into windows registry.
+<li>Every time you train base or recognize person settings,
+    which are displayed in property pages, are used.
+<li>If any person of facebase was trained and you save facebase – configuration file,
+    which stores all settings, are saved.
+<li>If the name of facebase file is “Base.txt”, then config file will have “BaseCFG.txt”   name.
+<li>If there are no trained persons in the base – config file will not be created.
+<li>When you load facebase from file and there is corresp.
+    Config file, then settings from this file will be loaded.
+<li>If you have facebase loaded into application and you changes any parameters from property pages
+    (HMM topology or sampling params) all (trained?) information will be removed.
+    And you must train HMMs again.
+</ol>
+<p>Also you can store and load settings to/from any other config file.</p>
+<p>Use “File->Save config file” and “File->Load config file” for these purposes.</p>
+<p>Every time you change settings via property pages or loading config file
+   and these new settings differs from you had before – all training information (hmms) are cleared.</p>
+
+</body>
+</html>
+

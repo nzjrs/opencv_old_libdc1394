@@ -1,0 +1,74 @@
+Microsoft Developer Studio Workspace File, Format Version 6.00
+# WARNING: DO NOT EDIT OR DELETE THIS WORKSPACE FILE!
+
+###############################################################################
+
+Project: "BlobTracker"="..\..\filters\Tracker3dFilter\trackers\BlobTracker\BlobTracker.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "CamShiftTracker"="..\..\filters\Tracker3dFilter\trackers\CamShiftTracker\CamShiftTracker.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Tracker3dDemo"=".\Tracker3dDemo.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name Tracker3dFilter
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "Tracker3dFilter"="..\..\filters\Tracker3dFilter\src\Tracker3dFilter.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name BlobTracker
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name CamShiftTracker
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Global:
+
+Package=<5>
+{{{
+}}}
+
+Package=<3>
+{{{
+}}}
+
+###############################################################################
+

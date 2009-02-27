@@ -1,0 +1,17 @@
+#include <cv.h>
+#include <dlfcn.h>
+
+CvScalar cvAvg(const CvArr* arr, const CvArr* mask  ) {
+    void *fptr;
+    CvScalar retval, *temp;
+
+    fptr = dlsym(_Chcv_handle, "cvAvg_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return retval;
+    }
+    dlrunfun(fptr, &temp,cvAvg, arr, mask  );
+    retval=*temp;
+    free(temp);
+    return retval;
+}

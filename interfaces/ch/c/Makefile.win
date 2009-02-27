@@ -1,0 +1,81 @@
+# OPENCV path is set assuming this folder is OPENCV_HOME/ch/c
+OPENCV =../..
+INC1   = /I$(OPENCV)/cv/include /I$(OPENCV)/cxcore/include /I$(OPENCV)/cvaux/include 
+INC2   = /I$(OPENCV)/otherlibs/highgui
+LFLAG1 = $(OPENCV)/lib/cv.lib $(OPENCV)/lib/cvaux.lib $(OPENCV)/lib/cxcore.lib
+LFLAG2 = $(OPENCV)/lib/highgui.lib advapi32.lib user32.lib
+INC3   = /I$(OPENCV)/otherlibs/cvcam/include
+LFLAG3 = $(OPENCV)/lib/cvcam.lib
+
+target: libcv.dl libhighgui.dl libcvcam.dl
+
+# for libcv.dl
+libcv.dl: cv_chdl.obj cv_retstruct_chdl.obj cxcore_retstruct_chdl.obj cvSetIPLAllocators_chdl.obj \
+	cvSetMemoryManager_chdl.obj cxcore_chdl.obj cvaux_chdl.obj constcharp2_chdl.obj
+	ch dllink libcv.dl cv_chdl.obj cv_retstruct_chdl.obj cxcore_retstruct_chdl.obj cvSetIPLAllocators_chdl.obj \
+	cvSetMemoryManager_chdl.obj cxcore_chdl.obj cvaux_chdl.obj constcharp2_chdl.obj  $(LFLAG1) 
+
+cv_chdl.obj: cv_chdl.c
+	ch dlcomp libcv.dl -cplusplus cv_chdl.c $(INC1)
+
+cxcore_chdl.obj: cxcore_chdl.c
+	ch dlcomp libcv.dl -cplusplus cxcore_chdl.c $(INC1)
+
+cvaux_chdl.obj: cvaux_chdl.c
+	ch dlcomp libcv.dl cvaux_chdl.c $(INC1)
+
+cv_retstruct_chdl.obj: handmade/cv/cv_retstruct_chdl.c
+	ch dlcomp libcv.dl -cplusplus handmade/cv/cv_retstruct_chdl.c $(INC1)
+
+cxcore_retstruct_chdl.obj: handmade/cxcore/cxcore_retstruct_chdl.c
+	ch dlcomp libcv.dl -cplusplus handmade/cxcore/cxcore_retstruct_chdl.c $(INC1)
+
+cvSetIPLAllocators_chdl.obj: handmade/cxcore/cvSetIPLAllocators_chdl.c
+	ch dlcomp libcv.dl -cplusplus handmade/cxcore/cvSetIPLAllocators_chdl.c $(INC1)
+
+cvSetMemoryManager_chdl.obj: handmade/cxcore/cvSetMemoryManager_chdl.c
+	ch dlcomp libcv.dl -cplusplus handmade/cxcore/cvSetMemoryManager_chdl.c $(INC1)
+
+constcharp2_chdl.obj: handmade/cxcore/constcharp2_chdl.c
+	ch dlcomp libcv.dl -cplusplus handmade/cxcore/constcharp2_chdl.c $(INC1)
+
+
+# for libhighgui.dl
+libhighgui.dl: highgui_chdl.obj  cvCreateTrackbar_chdl.obj cvSetMouseCallback_chdl.obj  set_postprocess_chdl.obj set_preprocess_chdl.obj
+	ch dllink libhighgui.dl highgui_chdl.obj  cvCreateTrackbar_chdl.obj cvSetMouseCallback_chdl.obj set_postprocess_chdl.obj set_preprocess_chdl.obj  $(LFLAG1)  $(LFLAG2)  
+
+highgui_chdl.obj: highgui_chdl.c
+	ch dlcomp highgui.dl highgui_chdl.c $(INC1) $(INC2)
+
+cvSetMouseCallback_chdl.obj: handmade/highgui/cvSetMouseCallback_chdl.c
+	ch dlcomp highgui.dl handmade/highgui/cvSetMouseCallback_chdl.c $(INC1) $(INC2)
+
+cvCreateTrackbar_chdl.obj: handmade/highgui/cvCreateTrackbar_chdl.c
+	ch dlcomp highgui.dl handmade/highgui/cvCreateTrackbar_chdl.c $(INC1) $(INC2)
+
+set_postprocess_chdl.obj: handmade/highgui/set_postprocess_chdl.c
+	ch dlcomp highgui.dl handmade/highgui/set_postprocess_chdl.c $(INC1) $(INC2)
+
+set_preprocess_chdl.obj: handmade/highgui/set_preprocess_chdl.c
+	ch dlcomp highgui.dl handmade/highgui/set_preprocess_chdl.c $(INC1) $(INC2)
+
+
+# for libcvcam.dl
+libcvcam.dl: cvcam_chdl.obj cvcamAVISetCallback_chdl.obj cvcamPlayAVI_chdl.obj    cvcamSetProperty_chdl.obj
+	ch dllink libcvcam.dl cvcam_chdl.obj cvcamAVISetCallback_chdl.obj cvcamPlayAVI_chdl.obj cvcamSetProperty_chdl.obj $(LFLAG3) 
+
+cvcam_chdl.obj: cvcam_chdl.c
+	ch dlcomp libcvcam.dl cvcam_chdl.c $(INC3)
+
+cvcamAVISetCallback_chdl.obj: handmade/cvcam/cvcamAVISetCallback_chdl.c
+	ch dlcomp libcvcam.dl handmade/cvcam/cvcamAVISetCallback_chdl.c $(INC3)
+
+cvcamPlayAVI_chdl.obj: handmade/cvcam/cvcamPlayAVI_chdl.c
+	ch dlcomp libcvcam.dl handmade/cvcam/cvcamPlayAVI_chdl.c $(INC3)
+
+cvcamSetProperty_chdl.obj: handmade/cvcam/cvcamSetProperty_chdl.c
+	ch dlcomp libcvcam.dl handmade/cvcam/cvcamSetProperty_chdl.c $(INC3)
+
+
+clean:
+	rm -rf *.o *.obj *.dl *.exp *.lib

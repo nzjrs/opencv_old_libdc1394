@@ -1,0 +1,201 @@
+<HTML>
+<HEAD>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<TITLE>3D Tracker Filter</TITLE>
+</HEAD>
+<BODY>
+<CENTER><TABLE CELLSPACING=0 CELLPADDING=5 WIDTH="90%" BGCOLOR="#6A9BED" NOSAVE >
+<TR NOSAVE>
+<TD NOSAVE>
+<CENTER><I><FONT COLOR="#000000"><FONT SIZE=+4>
+3D Tracker Filter
+</FONT></FONT></I></CENTER>
+</TD>
+</TR>
+</TABLE></CENTER>
+
+
+<H2>Description </H2>
+
+<p>
+The 3D tracker uses the 2D positions of objects as viewed by multiple
+cameras to determine the 3D position of the objects.
+The 3D Tracker filter is a DirectShow filter that runs under
+Microsoft Windows.
+The filter receives input from two or more cameras, passes it to 
+2D trackers to process the video frames, then calls the OpenCV 3D
+tracker to combine the 2D results to compute a 3D position.
+</p>
+<p>
+The 2D trackers are COM objects that
+implement an interface called <code>ITracker</code>.
+The available trackers are listed in registry in the
+<b>Video Trackers</b> category.
+Before using the 3D Tracker filter, you must register the tracker(s) you
+want to use with <code>regsvr32.exe</code>.
+There is an example COM object tracker that uses the CamShift tracker
+already in OpenCV. There is also an example tracker called
+BlobTracker.
+</p>
+<p>
+You can run the 3D Tracker filter using the DirectShow filter graph editor,
+<code>graphedt.exe</code>;
+using the sample application provided, <code>Tracker3dDemo.exe</code>;
+or by writing your own application.
+(You can use <code>Tracker3dDemo.exe</code> as a starting point.)
+To use <code>Tracker3dDemo.exe</code>, you must first use <code>graphedt.exe</code> to create a filter graph 
+for the sample app to load.
+</p>
+
+<h2>Setup</h2>
+<p>
+Before using the 3D Tracker filter, run the Calib filter
+with each of your cameras to determine the camera intrinsics.
+This needs to be done only once for each camera.
+Even if the cameras are moved, the intrinsics don't change.
+Save the intrinsics for each camera in a separate file.
+The 3D Tracker filter will ask for these filenames when you begin
+camera calibration in the 3D Tracker.
+</p>
+
+<p>
+When you first insert the 3D Tracker filter into a graph, it will have no pins.
+Use the property page to set the number of cameras, as described below,
+and then in GraphEdit choose <b>Refresh</b>
+on the <b>View</b> menu to cause GraphEdit to redisplay the filter
+with the selected number of input and output pins.
+Before you connect the inputs
+and outputs, set the tracker type and input frame size also.
+If you save the graph, the number of cameras, the tracker type,
+and the input size are saved with the graph.
+</p>
+
+<p>
+After you have set up the filter and connected it up,
+the graph will look something like this.
+You may have additional decompression or color conversion filters,
+depending on your cameras and your computer's display.
+</p>
+
+<CENTER><IMG SRC="3dTrackerFilterGraph.png"></CENTER>
+
+<h2>Controls</h2>
+<p>
+Right click on the 3D Tracker and choose <b>Filter Properties...</b> to bring
+up the filter's property page. A tab for the trackers' property page
+will be displayed as well if a tracker has been selected.
+</p>
+
+<CENTER><IMG SRC="3dTrackerPropertyPage.png"></CENTER>
+    
+<p>
+The controls in the box can be changed only when none of the pins of
+the filter are connected.
+You must click <b>Apply</b> after changing any of the controls in the box
+for them to take effect.
+</p>
+<DL>
+<DT>Number of cameras
+<DD>
+Sets the number of input and output pins on the filter, and the number
+of trackers it will use. After changing this value and clicking <b>Apply</b>,
+you must choose <b>Refresh</b> on the <b>View</b>
+menu in GraphEdit to cause it to redisplay the filter with the
+selected number of input and output pins.
+</DD>
+</DT>
+
+<DT>Tracker type
+<DD>
+Sets the type of tracker to use for 2D tracking.
+The available trackers are listed in registry in the
+<b>Video Trackers</b> category.
+If the tracker you want to use isn't listed in the drop-down box,
+make sure it is registered.
+After changing the tracker type, you may close and reopen the 3D
+Tracker property page to cause it to display a tab for the trackers'
+property page as well.
+Although the 3D Tracker filter allows different types of trackers to
+be used for different cameras at the same time, the property page does
+not support this configuration.
+</DD>
+</DT>
+
+<DT>Any size, 640 x 480, and 320 x 240
+<DD>
+Sets the input frame size the 3D Tracker filter will accept. If
+<b>Any size</b> is selected, the source filter will choose the size;
+depending on the cameras in use, the inputs may not all be the same size.
+</DD>
+</DT>
+
+<DT>Checkerboard width and height
+<DD>
+Sets the number of columns and rows of squares in your calibration checkerboard.
+This will apply the next time Calibrate cameras is clicked.
+</DD></DT>
+    
+<DT>Calibrate cameras ...
+<DD>
+Tells the filter to begin passing frames to cv3dTrackerCalibrateCameras.
+It pops up a dialog requesting the names of files containing the camera
+intrinsics as generated by CalibFilter.
+It uses the values in the checkerboard width and height fields.
+If the graph isn't running, this will take effect when the graph is run.
+See the next section for more information on camera calibration.
+</DD>
+</DT>
+
+<DT>Tracking results
+<DD>
+The property page also contains four fields 
+that display the 3D coordinates of the first four objects being tracked.
+These fields are invisible in the image above.
+These fields are updated on every frame whenever the property page is open
+while the graph is running. If a field is gray, it means the
+corresponding object is not currently being tracked by at least two
+cameras. In this case, the location displayed is the last tracked
+location.
+</DD>
+</DT>
+
+</DL>
+
+<H2>Camera calibration</h2>
+<p>
+The checkerboard that is used for camera intrinsics calibration should
+have a large number of squares and be held close to the camera. A
+different checkerboard may be used to calibrate the 3D Tracker filter.
+It can have
+fewer, larger squares so it can be held farther from the camera. It must be
+visible to all the cameras at once. The position of the
+checkerboard when the 3D Tracker camera calibration is done determines
+the 3D coordinate system that is used to report the locations of the
+tracked objects. The plane of the checkerboard is the x-y plane, with
+the origin being the lower-left intersection on the checkerboard.
+</p>
+<p>
+When you begin camera calibration,
+you will see red circles on the images of the checkerboard as
+it finds corners. When it finds all the corners in an image, the
+circles change to rainbow colors.
+Once it finds all the corners in all the images at the same
+time, the locations of the cameras is saved and calibration stops. If
+this happens instantly, you may only see a flash of color in the
+images.
+To force it to keep running the calibration step even after
+all the corners are found, hold down the control key when you click on
+<b>Calibrate cameras</b>. Click <b>Calibrate cameras</b> again
+(without the control key) to cause it to finish calibrating.
+</p>
+<p>
+If you are using the BlobTracker to track infrared LEDs and
+you have infrared filters on the cameras, you must evenly illuminate
+the checkerboard with a fairly intense infrared source. A 250 watt
+infrared flood lamp works well. A regular (non-infrared) flood lamp
+probably would work as well. 
+</p>
+
+
+</BODY>
+</HTML>

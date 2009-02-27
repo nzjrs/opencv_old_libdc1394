@@ -1,0 +1,165 @@
+<HTML>
+    <HEAD>
+        <TITLE>Tracker 3D Demo</TITLE>
+        <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+    </HEAD>
+    <BODY>
+        <CENTER><TABLE CELLSPACING="0" CELLPADDING="5" WIDTH="90%" BGCOLOR="#6a9bed" NOSAVE>
+                <TR NOSAVE>
+                    <TD NOSAVE>
+                        <CENTER><I><FONT COLOR="#000000"><FONT SIZE="+4"> Tracker 3D Demo </FONT></FONT></I>
+                        </CENTER>
+                    </TD>
+                </TR>
+            </TABLE>
+        </CENTER>
+        <H2>Description
+        </H2>
+        <p>
+            This application illustrates the use of the <a href="3dTrackerFilter.htm">Tracker3DFilter</a>
+            to perform multi-camera 3D tracking.&nbsp; The intention with this application 
+            is to provide a straightforward example of the use of 
+            Tracker3dFilter in a Windows MFC application.&nbsp; The program 
+            serves a second purpose as well in it's ability to log results from 
+            the tracker to a file for testing or debugging.&nbsp; The details of 
+            configuring the Tracker3dFilter for operation are discussed further 
+            in the document describing the Filter and it's property page.&nbsp; 
+            Here we will deal specifically with the demonstration application.</p>
+        <p>
+            &nbsp;The initial configuration of the application is 
+            specified via a series of command line arguments:
+        </p>
+        <P><FONT face="Courier New">Tracker3dDemo.exe &lt;-blob&gt; &lt;-[c|C]<EM>intrinsicsfilename</EM>&gt;&nbsp; 
+                &lt;-s<EM>#,#</EM>&gt; &lt;-n<EM>#</EM>&gt; &lt;-m<EM>#</EM>&gt; &lt;-t<EM>#</EM>&gt; 
+                &lt;-l<EM>logfilename</EM>&gt; <EM>graphfile.grf</EM></FONT></P>
+        <p>
+            <TABLE id="Table1" cellSpacing="1" cellPadding="1" width="100%" border="0">
+                <TR>
+                    <TD width="70"><FONT face="Courier New">-blob</FONT></TD>
+                    <TD>Operate in BlobTracker mode.&nbsp; The default is to operate in CamShiftTracker 
+                        mode</TD>
+                </TR>
+                <TR>
+                    <TD width="70"><FONT face="Courier New">-c|C</FONT></TD>
+                    <TD>"c" instructs the application to calibrate with the filename 
+                        intrinsictsfilename "C" instructs the program to calibrate the camera location 
+                        continuously (for testing only).&nbsp; Specify the camera intrinsic files in 
+                        the same order that the cameras are attached to the input pins of the filter in 
+                        the graph.</TD>
+                </TR>
+                <TR>
+                    <TD width="70"><FONT face="Courier New">-s</FONT></TD>
+                    <TD>specify the dimensions of the checkerboard that will be used in calibrating the 
+                        cameras, only has an effect when "c" or "C" options are specified</TD>
+                </TR>
+                <TR>
+                    <TD width="70"><FONT face="Courier New">-n</FONT></TD>
+                    <TD>specify the number of objects to track (in BlobTracker mode only)</TD>
+                </TR>
+                <TR>
+                    <TD width="70"><FONT face="Courier New">-m</FONT></TD>
+                    <TD>specify the minimum area of object to track in pixels (in BlobTracker mode 
+                        only)</TD>
+                </TR>
+                <TR>
+                    <TD width="70"><FONT face="Courier New">-t</FONT></TD>
+                    <TD>specify the minimum brightness of the objects to track (0-255, in BlobTracker 
+                        mode only)</TD>
+                </TR>
+                <TR>
+                    <TD width="70"><FONT face="Courier New">-l</FONT></TD>
+                    <TD>operate in debugging mode and log results to a file</TD>
+                </TR>
+            </TABLE>
+        </p>
+        <P>When the application runs it will open one video render window for 
+        each camera attached to the Tracker3dFilter in the DirectShow graph 
+        specified on the command line.&nbsp; There will also be a control panel 
+        dialog which provides access to the tracker parameters, allows 
+        calibration of the cameras and displays the tracking results.&nbsp; The 
+        layout and function of this dialog is presented below.</P>
+        <h2>Controls</h2>
+        <CENTER>
+        <IMG alt="Tracker3dDemo Application" src="Tracker3dDemo.png" width="356" height="247"><p>&nbsp;</p>
+        </CENTER>
+        <p>
+            <TABLE id="Table2" cellSpacing="1" cellPadding="1" width="100%" border="0">
+                <TR>
+                    <TD width="213" style="border-left-style: solid; border-left-width: 1; border-top-style: solid; border-top-width: 1"><STRONG>Camera Calibration</STRONG></TD>
+                    <TD style="border-right-style: solid; border-right-width: 1; border-top-style: solid; border-top-width: 1"></TD>
+                </TR>
+                <TR>
+                    <TD width="213" style="border-left-style: solid; border-left-width: 1">&nbsp;&nbsp;&nbsp; Calibrate Cameras</TD>
+                    <TD style="border-right-style: solid; border-right-width: 1"><EM>Pressing this button will produce a dialog box with which to specify the camera 
+                            intrinsics files for each of the&nbsp;</EM></TD>
+                </TR>
+                <TR>
+                    <TD width="213" style="border-left-style: solid; border-left-width: 1">&nbsp;&nbsp;&nbsp; Checkerboard Width</TD>
+                    <TD style="border-right-style: solid; border-right-width: 1"><EM>Specifies the width of the checkerboard in squares</EM></TD>
+                </TR>
+                <TR>
+                    <TD width="213" style="border-left-style: solid; border-left-width: 1; border-bottom-style: solid; border-bottom-width: 1">&nbsp;&nbsp;&nbsp; Checkerboard Height</TD>
+                    <TD style="border-right-style: solid; border-right-width: 1; border-bottom-style: solid; border-bottom-width: 1"><EM>Specifies the height of the checkerboard in squares</EM></TD>
+                </TR>
+                <TR>
+                    <TD width="213" style="border-left-style: solid; border-left-width: 1; border-top-style: solid; border-top-width: 1"><STRONG>Tracker Results</STRONG>
+                    </TD>
+                    <TD style="border-right-style: solid; border-right-width: 1; border-top-style: solid; border-top-width: 1"></TD>
+                </TR>
+                <TR>
+                    <TD width="213" style="border-left-style: solid; border-left-width: 1; border-bottom-style: solid; border-bottom-width: 1"></TD>
+                    <TD style="border-right-style: solid; border-right-width: 1; border-bottom-style: solid; border-bottom-width: 1"><EM>This is the location where the application will output the coordinates of the 
+                            tracked objects (up to 3 in up to 3 rows)&nbsp; These results are updated per 
+                            frame as the tracker runs.</EM></TD>
+                </TR>
+                <TR>
+                    <TD width="213" style="border-left-style: solid; border-left-width: 1; border-top-style: solid; border-top-width: 1"><STRONG>Tracker Config</STRONG>
+                    </TD>
+                    <TD style="border-right-style: solid; border-right-width: 1; border-top-style: solid; border-top-width: 1"></TD>
+                </TR>
+                <TR>
+                    <TD width="213" style="border-left-style: solid; border-left-width: 1">&nbsp;&nbsp;&nbsp; Number of Objects</TD>
+                    <TD style="border-right-style: solid; border-right-width: 1"><EM>Specifies the number of objects the BlobTracker will track, the CamShiftTracker 
+                            will track only one</EM></TD>
+                </TR>
+                <TR>
+                    <TD width="213" style="border-left-style: solid; border-left-width: 1">&nbsp;&nbsp;&nbsp; Threshold</TD>
+                    <TD style="border-right-style: solid; border-right-width: 1"><EM>Specifies the minimum brightness of the objects the BlobTracker will 
+                            track.&nbsp; Range is 0-255 for black to white. Has no effect in 
+                            CamShiftTracker mode.</EM></TD>
+                </TR>
+                <TR>
+                    <TD width="213" style="border-left-style: solid; border-left-width: 1; border-bottom-style: solid; border-bottom-width: 1">&nbsp;&nbsp;&nbsp; Min Size</TD>
+                    <TD style="border-right-style: solid; border-right-width: 1; border-bottom-style: solid; border-bottom-width: 1"><EM>Specifies the minimum size of the object the BlobTracker will track in 
+                            pixels.&nbsp; Has no effect in CamShiftTracker mode.</EM></TD>
+                </TR>
+                <TR>
+                    <TD width="213" style="border-left-style: solid; border-left-width: 1; border-top-style: solid; border-top-width: 1"><STRONG>Output Config</STRONG></TD>
+                    <TD style="border-right-style: solid; border-right-width: 1; border-top-style: solid; border-top-width: 1"></TD>
+                </TR>
+                <TR>
+                    <TD width="213" style="border-left-style: solid; border-left-width: 1">&nbsp;&nbsp;&nbsp; Color classified pixels</TD>
+                    <TD style="border-right-style: solid; border-right-width: 1"><EM>If selected the pixels in the images are colored when they area&nbsp; a part of 
+                            an object found by BlobTracker</EM></TD>
+                </TR>
+                <TR>
+                    <TD width="213" style="border-left-style: solid; border-left-width: 1; border-bottom-style: solid; border-bottom-width: 1">&nbsp;&nbsp;&nbsp; Bounding box&nbsp;</TD>
+                    <TD style="border-right-style: solid; border-right-width: 1; border-bottom-style: solid; border-bottom-width: 1"><EM>If selected a bounding box is drawn around each of the objects found by the 
+                            BlobTracker</EM></TD>
+                </TR>
+                <TR>
+                    <TD width="213" style="border-left-style: solid; border-left-width: 1; border-top-style: solid; border-top-width: 1"><STRONG>Exit </STRONG>
+                    </TD>
+                    <TD style="border-right-style: solid; border-right-width: 1; border-top-style: solid; border-top-width: 1"></TD>
+                </TR>
+                <TR>
+                    <TD width="213" style="border-left-style: solid; border-left-width: 1; border-bottom-style: solid; border-bottom-width: 1"></TD>
+                    <TD style="border-right-style: solid; border-right-width: 1; border-bottom-style: solid; border-bottom-width: 1"><EM>Exit the Application</EM></TD>
+                </TR>
+            </TABLE>
+        </p>
+        <DL>
+            <DT></DT>
+        </DL>
+    </BODY>
+</HTML>

@@ -1,0 +1,12 @@
+int cvcamSetProperty(int camera, char* property, void* value) {
+    void *fptr;
+    int retval;
+
+    fptr = dlsym(_Chcvcam_handle, "cvcamSetProperty_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return -1;
+    }
+    dlrunfun(fptr, &retval, cvcamSetProperty, camera, property, value);
+    return retval;
+}

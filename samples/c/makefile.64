@@ -1,0 +1,24 @@
+!include ..\..\_make\make_cfg.mak
+
+CXX="$(PSDK)\bin\win64\x86\amd64\cl"
+CXXFLAGS = /nologo /DWIN32 /I"$(PSDK)/include" /I"$(PSDK)\include/crt" /I"$(PSDK)\include\mfc" \
+    /I"$(PSDK)\include\atl" /I"..\..\cxcore\include" /I"..\..\cv\include" \
+    /I"..\..\cvaux\include" /I"..\..\ml\include" /I"..\..\otherlibs\highgui"
+LINKFLAGS = /link "/libpath:..\..\lib" "/libpath:$(PSDK)/lib/amd64" \
+    "/machine:AMD64" bufferoverflowu.lib cxcore_64.lib cv_64.lib \
+    cvaux_64.lib ml_64.lib highgui_64.lib
+
+SAMPLES = blobtrack.exe bgfg_segm.exe bgfg_codebook.exe camshiftdemo.exe contours.exe convert_cascade.exe \
+    convexhull.exe delaunay.exe  demhist.exe dft.exe distrans.exe \
+    drawing.exe edge.exe facedetect.exe ffilldemo.exe find_obj.exe fitellipse.exe \
+    houghlines.exe kalman.exe kmeans.exe image.exe inpaint.exe laplace.exe \
+    letter_recog.exe lkdemo.exe minarea.exe morphology.exe motempl.exe \
+    pyramid_segmentation.exe squares.exe stereo_calib.exe mushroom.exe watershed.exe
+
+all: $(SAMPLES)
+
+.c.exe:
+    @$(CXX) $(CXXFLAGS) $< $(LINKFLAGS)
+
+.cpp.exe:
+    @$(CXX) $(CXXFLAGS) $< $(LINKFLAGS)

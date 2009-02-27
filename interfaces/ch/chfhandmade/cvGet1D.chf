@@ -1,0 +1,17 @@
+#include <cv.h>
+#include <dlfcn.h>
+
+CvScalar cvGet1D(const CvArr* arr, int idx1) {
+    void *fptr;
+    CvScalar retval, *temp;
+
+    fptr = dlsym(_Chcv_handle, "cvGet1D_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return retval;
+    }
+    dlrunfun(fptr, &temp,cvGet1D, arr, idx1);
+    retval = *temp;
+    free(temp);
+    return retval;
+}

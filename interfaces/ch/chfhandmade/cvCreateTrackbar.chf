@@ -1,0 +1,12 @@
+int cvCreateTrackbar(char* trackbar_name, char* window_name, int* value, int count, CvTrackbarCallback on_change) {
+    void *fptr;
+    int retval;
+
+    fptr = dlsym(_Chhighgui_handle, "cvCreateTrackbar_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return -1;
+    }
+    dlrunfun(fptr, &retval, cvCreateTrackbar, trackbar_name, window_name, value, count, on_change);
+    return retval;
+}

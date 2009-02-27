@@ -1,0 +1,10 @@
+void cvSetIPLAllocators(Cv_iplCreateImageHeader create_header, Cv_iplAllocateImageData allocate_data, Cv_iplDeallocate deallocate, Cv_iplCreateROI create_roi, Cv_iplCloneImage clone_image) {
+    void *fptr;
+
+    fptr = dlsym(_Chcv_handle, "cvSetIPLAllocators_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return;
+    }
+    dlrunfun(fptr, NULL, cvSetIPLAllocators, create_header, allocate_data, deallocate, create_roi, clone_image);
+}

@@ -1,0 +1,31 @@
+!include make_cfg.mak
+
+!ifndef MY_CXX
+MY_CXX = "$(PSDK)\bin\win64\x86\amd64\cl"
+!endif
+
+!ifndef MY_CXXFLAGS
+MY_CXXFLAGS = "/I"$(PSDK)/include" /I"$(PSDK)\include/crt"  /I"$(PSDK)\include\mfc" /I"$(PSDK)\include\atl""
+!endif
+
+!ifndef MY_LINK
+MY_LINK = "$(PSDK)\bin\win64\x86\amd64\link"
+!endif
+
+!ifndef MY_LINKFLAGS
+MY_LINKFLAGS = "/libpath:"$(PSDK)/lib/amd64" bufferoverflowu.lib"
+!endif
+
+!ifndef PLATFORM
+PLATFORM = AMD64
+!endif
+
+!ifndef PDBNAME
+PDBNAME = vc70.pdb
+!endif
+
+!ifndef DEBUG
+DEBUG = 0
+!endif
+
+!include make_all_ms.mak

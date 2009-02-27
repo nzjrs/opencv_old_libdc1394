@@ -1,0 +1,12 @@
+int cvcamAVISetCallback(cvcamAVIFILE file, void* callback) {
+    void *fptr;
+    int retval;
+
+    fptr = dlsym(_Chcvcam_handle, "cvcamAVISetCallback_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return -1;
+    }
+    dlrunfun(fptr, &retval, cvcamAVISetCallback, file, callback);
+    return retval;
+}

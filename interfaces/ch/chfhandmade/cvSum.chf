@@ -1,0 +1,17 @@
+#include <cv.h>
+#include <dlfcn.h>
+
+CvScalar cvSum(const CvArr* arr) {
+    void *fptr;
+    CvScalar retval, *temp;
+
+    fptr = dlsym(_Chcv_handle, "cvSum_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return retval;
+    }
+    dlrunfun(fptr, &temp,cvSum, arr);
+    retval=*temp;
+    free(temp);
+    return retval;
+}

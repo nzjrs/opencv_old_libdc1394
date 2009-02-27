@@ -1,0 +1,31 @@
+!include make_cfg.mak
+
+!ifndef MY_CXX
+MY_CXX = "$(ICC_HOME)\ia32\bin\icl"
+!endif
+
+!ifndef MY_CXXFLAGS
+MY_CXXFLAGS = "/Qopenmp /I"$(ICC_HOME)/ia32/include" "/Qwd383,869,981,1125,1418,1419,1572""
+!endif
+
+!ifndef MY_LINK
+MY_LINK = link
+!endif
+
+!ifndef MY_LINKFLAGS
+MY_LINKFLAGS = "/libpath:"$(ICC_HOME)/ia32/lib" /nodefaultlib:libmmd /nodefaultlib:libmmdd /nodefaultlib:libm"
+!endif
+
+!ifndef PLATFORM
+PLATFORM = I386
+!endif
+
+!ifndef PDBNAME
+PDBNAME = vc60.pdb
+!endif
+
+!ifndef DEBUG
+DEBUG = 0
+!endif
+
+!include make_all_ms.mak

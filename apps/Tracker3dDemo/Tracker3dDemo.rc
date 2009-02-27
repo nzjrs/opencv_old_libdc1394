@@ -1,0 +1,166 @@
+//Microsoft Developer Studio generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "afxres.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// English (U.S.) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+#ifdef _WIN32
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+#pragma code_page(1252)
+#endif //_WIN32
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "#include ""afxres.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "#define _AFX_NO_SPLITTER_RESOURCES\r\n"
+    "#define _AFX_NO_OLE_RESOURCES\r\n"
+    "#define _AFX_NO_TRACKER_RESOURCES\r\n"
+    "#define _AFX_NO_PROPERTY_RESOURCES\r\n"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+#ifndef _MAC
+/////////////////////////////////////////////////////////////////////////////
+//
+// Version
+//
+
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION 1,0,0,1
+ PRODUCTVERSION 1,0,0,1
+ FILEFLAGSMASK 0x3fL
+#ifdef _DEBUG
+ FILEFLAGS 0x1L
+#else
+ FILEFLAGS 0x0L
+#endif
+ FILEOS 0x4L
+ FILETYPE 0x1L
+ FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040904B0"
+        BEGIN
+            VALUE "CompanyName", "\0"
+            VALUE "FileDescription", "Tracker3dDemo\0"
+            VALUE "FileVersion", "1, 0, 0, 1\0"
+            VALUE "InternalName", "Tracker3dDemo\0"
+            VALUE "LegalCopyright", "Copyright (C) 2002\0"
+            VALUE "LegalTrademarks", "\0"
+            VALUE "OriginalFilename", "Tracker3dDemo.EXE\0"
+            VALUE "ProductName", "Tracker3dDemo\0"
+            VALUE "ProductVersion", "1, 0, 0, 1\0"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x409, 1200
+    END
+END
+
+#endif    // !_MAC
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_MAIN DIALOG DISCARDABLE  0, 0, 233, 132
+STYLE DS_MODALFRAME | WS_MINIMIZEBOX | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Tracker 3d Demo"
+FONT 8, "MS Sans Serif"
+BEGIN
+    EDITTEXT        IDC_CHECKERBOARD_WIDTH,75,34,19,13,ES_NUMBER
+    EDITTEXT        IDC_CHECKERBOARD_HEIGHT,106,33,19,13,ES_NUMBER
+    PUSHBUTTON      "&Calibrate Cameras",IDC_CALIBRATE_CAMERAS,20,23,50,21,
+                    BS_MULTILINE
+    EDITTEXT        IDC_NUMBER_OF_OBJECTS,81,73,32,13,ES_NUMBER
+    EDITTEXT        IDC_THRESHOLD,81,90,32,12,ES_NUMBER
+    EDITTEXT        IDC_MIN_SIZE,81,106,32,12,ES_NUMBER
+    CONTROL         "Color classified pixels",IDC_COLOR_CLASSIFIED_PIXELS,
+                    "Button",BS_AUTOCHECKBOX,130,73,80,10
+    CONTROL         "Bounding box",IDC_BOUNDING_BOX,"Button",BS_AUTOCHECKBOX,
+                    130,86,57,10
+    DEFPUSHBUTTON   "Exit",IDC_EXIT,176,111,50,14
+    RTEXT           "Number of objects",IDC_STATIC,9,76,65,9
+    LTEXT           "",IDC_LOCATION1,139,17,80,9
+    LTEXT           "",IDC_LOCATION2,139,30,80,9
+    LTEXT           "",IDC_LOCATION3,139,43,80,9
+    CTEXT           "Checkerboard Width     Height",IDC_STATIC5,71,14,57,18
+    RTEXT           "Threshold",IDC_LABEL2,14,91,60,10
+    RTEXT           "Min size",IDC_LABEL3,14,107,60,10
+    GROUPBOX        "Tracker Config",IDC_STATIC,7,61,113,64
+    GROUPBOX        "Output Config",IDC_STATIC,123,61,103,39
+    GROUPBOX        "Camera Calibration",IDC_STATIC,7,7,125,47
+    GROUPBOX        "Tracker Results",IDC_STATIC,135,7,91,47
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO DISCARDABLE 
+BEGIN
+    IDD_MAIN, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 226
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 125
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+#endif    // English (U.S.) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+#define _AFX_NO_SPLITTER_RESOURCES
+#define _AFX_NO_OLE_RESOURCES
+#define _AFX_NO_TRACKER_RESOURCES
+#define _AFX_NO_PROPERTY_RESOURCES
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+

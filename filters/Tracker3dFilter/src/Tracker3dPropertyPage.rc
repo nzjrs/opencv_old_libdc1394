@@ -1,0 +1,164 @@
+//Microsoft Developer Studio generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include <windows.h>
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// English (U.S.) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+#ifdef _WIN32
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+#pragma code_page(1252)
+#endif //_WIN32
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "#include <windows.h>\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_Tracker3dPropertyPage DIALOG DISCARDABLE  0, 0, 233, 152
+STYLE WS_CHILD
+FONT 8, "MS Shell Dlg"
+BEGIN
+    GROUPBOX        "",IDC_STATIC1,8,9,215,49
+    LTEXT           "Number of cameras",IDC_STATIC2,15,22,65,9
+    EDITTEXT        IDC_NUMBER_OF_CAMERAS,80,20,32,13,ES_NUMBER
+    LTEXT           "Tracker",IDC_STATIC3,15,39,55,9
+    COMBOBOX        IDC_TRACKER_DLL,80,37,85,45,CBS_DROPDOWNLIST | 
+                    CBS_AUTOHSCROLL | CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    CONTROL         "Any size",IDC_ANY_SIZE,"Button",BS_AUTORADIOBUTTON,173,
+                    18,41,10
+    CONTROL         "640 × 480",IDC_640x480,"Button",BS_AUTORADIOBUTTON,173,
+                    30,41,10
+    CONTROL         "320 × 240",IDC_320x240,"Button",BS_AUTORADIOBUTTON,173,
+                    42,41,10
+    PUSHBUTTON      "Calibrate cameras ...",IDC_CALIBRATE_CAMERAS,8,75,50,21,
+                    BS_MULTILINE
+    CTEXT           "Checkerboard Width     Height",IDC_STATIC4,10,109,48,18
+    EDITTEXT        IDC_CHECKERBOARD_WIDTH,10,129,19,13,ES_NUMBER
+    EDITTEXT        IDC_CHECKERBOARD_HEIGHT,37,129,19,13,ES_NUMBER
+    LTEXT           "",IDC_LOCATION1,84,75,90,9
+    LTEXT           "",IDC_LOCATION2,84,88,90,9
+    LTEXT           "",IDC_LOCATION3,84,101,90,9
+    LTEXT           "",IDC_LOCATION4,84,114,90,9
+END
+
+
+#ifndef _MAC
+/////////////////////////////////////////////////////////////////////////////
+//
+// Version
+//
+
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION 8,1,0,0
+ PRODUCTVERSION 8,1,0,0
+ FILEFLAGSMASK 0x30003fL
+#ifdef _DEBUG
+ FILEFLAGS 0xbL
+#else
+ FILEFLAGS 0xaL
+#endif
+ FILEOS 0x4L
+ FILETYPE 0x2L
+ FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040904E4"
+        BEGIN
+            VALUE "CompanyName", "Intel Corporation\0"
+            VALUE "FileDescription", "3d Object Tracker Filter\0"
+            VALUE "FileVersion", "0.00\0"
+            VALUE "LegalCopyright", "Copyright (C) 2002 Intel Corporation\0"
+            VALUE "OriginalFilename", "ObjectTracker3dFilter.ax\0"
+            VALUE "ActiveMovie", "Filter dll\0"
+            VALUE "OLESelfRegister", "AM20\0"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x409, 1252
+    END
+END
+
+#endif    // !_MAC
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO DISCARDABLE 
+BEGIN
+    IDD_Tracker3dPropertyPage, DIALOG
+    BEGIN
+        BOTTOMMARGIN, 142
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_TITLE               "3d Tracker"
+END
+
+#endif    // English (U.S.) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+

@@ -1,0 +1,104 @@
+Microsoft Developer Studio Workspace File, Format Version 6.00
+# WARNING: DO NOT EDIT OR DELETE THIS WORKSPACE FILE!
+
+###############################################################################
+
+Project: "CV"=..\..\CV\Make\CV.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "GestRec"=..\..\OTHERLIBS\GestRec\GestRec.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "HighGUI"=..\..\OtherLibs\HighGUI\HighGUI.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "PTGrey"=..\..\OtherLibs\PTGrey\PTGrey.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name HighGUI
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "StereoGR"=.\StereoGR.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name PTGrey
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name CV
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name GestRec
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name HighGUI
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "cvaux"=..\..\cvaux\make\cvaux.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Global:
+
+Package=<5>
+{{{
+}}}
+
+Package=<3>
+{{{
+}}}
+
+###############################################################################
+

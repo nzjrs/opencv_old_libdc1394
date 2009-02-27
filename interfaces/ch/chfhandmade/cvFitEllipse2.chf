@@ -1,0 +1,17 @@
+#include <cv.h>
+#include <dlfcn.h>
+
+CvBox2D cvFitEllipse2(const CvArr* points) {
+    void *fptr;
+    CvBox2D retval, *temp;
+
+    fptr = dlsym(_Chcv_handle, "cvFitEllipse2_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return retval;
+    }
+    dlrunfun(fptr, &temp,cvFitEllipse2, points);
+    retval=*temp;
+    free(temp);
+    return retval;
+}

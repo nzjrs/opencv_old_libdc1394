@@ -1,0 +1,12 @@
+void* cvLoad(char* filename, CvMemStorage* memstorage, char* name, char** real_name) {
+    void *fptr;
+    void*retval;
+
+    fptr = dlsym(_Chcv_handle, "cvLoad_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return NULL;
+    }
+    dlrunfun(fptr, &retval, cvLoad, filename, memstorage, name, real_name);
+    return retval;
+}

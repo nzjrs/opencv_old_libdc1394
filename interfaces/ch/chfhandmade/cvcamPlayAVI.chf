@@ -1,0 +1,12 @@
+int cvcamPlayAVI(char* file, void* window, int width, int height, void* callback) {
+    void *fptr;
+    int retval;
+
+    fptr = dlsym(_Chcvcam_handle, "cvcamPlayAVI_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return -1;
+    }
+    dlrunfun(fptr, &retval, cvcamPlayAVI, file, window, width, height, callback);
+    return retval;
+}
