@@ -721,6 +721,7 @@ else
                 #include <asm/types.h>
                 #include <sys/time.h>
                 ]])
+        PKG_CHECK_MODULES(LIBV4L, libv4l2)
     else
         # if we get here then --with-v4l was not called with 'yes','no' or 'auto'
         AC_MSG_WARN([unexpected arguments for option --with-v4l, continuing assuming 'no'])
