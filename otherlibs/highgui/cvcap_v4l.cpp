@@ -265,7 +265,7 @@ static unsigned int n_buffers = 0;
 #define V4L2_PIX_FMT_SN9C10X  v4l2_fourcc('S','9','1','0') /* SN9C10x cmpr. */
 #endif
 
-int  PALETTE_BGR24 = 0,
+int  PALETTE_BGR24 = 1,
      PALETTE_YVU420 = 0,
      PALETTE_YUV411P = 0,
      PALETTE_YUYV = 0,
@@ -389,26 +389,6 @@ try_palette(int fd,
   return 0;
 }
 
-static int try_palette_v4l2(CvCaptureCAM_V4L* capture, unsigned long colorspace)
-{
-  CLEAR (capture->form);
-
-  capture->form.type                = V4L2_BUF_TYPE_VIDEO_CAPTURE;
-  capture->form.fmt.pix.pixelformat = colorspace;
-  capture->form.fmt.pix.field       = V4L2_FIELD_ANY;
-  capture->form.fmt.pix.width = DEFAULT_V4L_WIDTH;
-  capture->form.fmt.pix.height = DEFAULT_V4L_HEIGHT;
-  
-  if (-1 == xioctl (capture->deviceHandle, VIDIOC_S_FMT, &capture->form))
-      return -1;
-
-  
-  if (colorspace != capture->form.fmt.pix.pixelformat)
-    return -1;
-  else
-    return 0;
-}
-
 static int try_init_v4l(CvCaptureCAM_V4L* capture, char *deviceName)
 {
 
@@ -497,79 +477,6 @@ static int try_init_v4l2(CvCaptureCAM_V4L* capture, char *deviceName)
   }
 
   return detect;
-
-}
-
-static int autosetup_capture_mode_v4l2(CvCaptureCAM_V4L* capture)
-{
-printf("TESTING\n");
-  if (try_palette_v4l2(capture, V4L2_PIX_FMT_BGR24) == 0)
-  {
-    PALETTE_BGR24 = 1;
-  }
-  else
-  if (try_palette_v4l2(capture, V4L2_PIX_FMT_YVU420) == 0)
-  {
-    PALETTE_YVU420 = 1;
-  }
-  else
-  if (try_palette_v4l2(capture, V4L2_PIX_FMT_YUV411P) == 0)
-  {
-    PALETTE_YUV411P = 1;
-  }
-  else
-
-#ifdef HAVE_JPEG
-#ifdef __USE_GNU
-      /* support for MJPEG is only available with libjpeg and gcc,
-	 because it's use libjepg and fmemopen()
-      */
-  if (try_palette_v4l2(capture, V4L2_PIX_FMT_MJPEG) == 0)
-  {
-    PALETTE_MJPEG = 1;
-  }
-  else
-#endif
-#endif
-
-  if (try_palette_v4l2(capture, V4L2_PIX_FMT_YUYV) == 0)
-  {
-    PALETTE_YUYV = 1;
-  }
-  else if (try_palette_v4l2(capture, V4L2_PIX_FMT_UYVY) == 0)
-  {
-    PALETTE_UYVY = 1;
-  }
-  else
-  if (try_palette_v4l2(capture, V4L2_PIX_FMT_SN9C10X) == 0)
-  {
-    CLEAR (capture->compr);
-    if (-1 == xioctl (capture->deviceHandle, VIDIOC_G_JPEGCOMP, &capture->compr)) {
-        perror ("VIDIOC_G_JPEGCOMP");
-        return -1;
-    }
-         
-    capture->compr.quality = 0;
-
-    if (-1 == xioctl (capture->deviceHandle, VIDIOC_S_JPEGCOMP, &capture->compr)) {
-        perror ("VIDIOC_S_JPEGCOMP");
-        return -1;
-    }
-
-    PALETTE_SN9C10X = 1;
-  } else
-  if (try_palette_v4l2(capture, V4L2_PIX_FMT_SBGGR8) == 0)
-  {
-    PALETTE_SBGGR8 = 1;
-  } 
-  else
-  {
-	fprintf(stderr, "HIGHGUI ERROR: V4L2: Pixel format of incoming image is unsupported by OpenCV\n");
-    icvCloseCAM_V4L(capture);
-    return -1;
-  }
-  
-  return 0;
 
 }
 
@@ -833,8 +740,23 @@ static int _capture_V4L2 (CvCaptureCAM_V4L *capture, char *deviceName)
        return -1;
    }
 
-   if (autosetup_capture_mode_v4l2(capture) == -1)
-       return -1;
+  /* libv4l will convert from any format to V4L2_PIX_FMT_BGR24 */
+  CLEAR (capture->form);
+  capture->form.type                = V4L2_BUF_TYPE_VIDEO_CAPTURE;
+  capture->form.fmt.pix.pixelformat = V4L2_PIX_FMT_BGR24;
+  capture->form.fmt.pix.field       = V4L2_FIELD_ANY;
+  capture->form.fmt.pix.width = DEFAULT_V4L_WIDTH;
+  capture->form.fmt.pix.height = DEFAULT_V4L_HEIGHT;
+  
+  if (-1 == xioctl (capture->deviceHandle, VIDIOC_S_FMT, &capture->form)) {
+      fprintf( stderr, "HIGHGUI ERROR: libv4l unable to ioctl S_FMT\n\n");
+      return -1;
+  }
+  
+  if (V4L2_PIX_FMT_BGR24 != capture->form.fmt.pix.pixelformat) {
+      fprintf( stderr, "HIGHGUI ERROR: libv4l unable convert to requested pixfmt\n\n");
+      return -1;
+  }
 
    icvSetVideoSize(capture, DEFAULT_V4L_WIDTH, DEFAULT_V4L_HEIGHT);
 
@@ -911,7 +833,7 @@ static int _capture_V4L2 (CvCaptureCAM_V4L *capture, char *deviceName)
 
        capture->buffers[n_buffers].length = buf.length;
        capture->buffers[n_buffers].start =
-         mmap (NULL /* start anywhere */,
+         v4l2_mmap (NULL /* start anywhere */,
                buf.length,
                PROT_READ | PROT_WRITE /* required */,
                MAP_SHARED /* recommended */,
@@ -2678,7 +2600,7 @@ static void icvCloseCAM_V4L( CvCaptureCAM_V4L* capture ){
 
        for (unsigned int n_buffers = 0; n_buffers < capture->req.count; ++n_buffers)
        {
-           if (-1 == munmap (capture->buffers[n_buffers].start, capture->buffers[n_buffers].length)) {
+           if (-1 == v4l2_munmap (capture->buffers[n_buffers].start, capture->buffers[n_buffers].length)) {
                perror ("munmap");
            }
        }
