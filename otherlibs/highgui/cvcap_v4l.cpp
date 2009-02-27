@@ -224,6 +224,7 @@ make & enjoy!
 #include <linux/videodev.h>
 #include <linux/videodev2.h>
 
+#include <libv4l1.h>
 #include <libv4l2.h>
 
 /* Defaults - If your board can do better, set it here.  Set for the most common type inputs. */
