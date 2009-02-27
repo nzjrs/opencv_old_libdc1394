@@ -308,12 +308,10 @@ typedef struct CvCaptureCAM_V4L
    int v4l2_hue, v4l2_hue_min, v4l2_hue_max;
    int v4l2_gain, v4l2_gain_min, v4l2_gain_max;
 
+   int is_v4l2_device;
+
 }
 CvCaptureCAM_V4L;
-
-int V4L2_SUPPORT = 0;
-
-
 
 static void icvCloseCAM_V4L( CvCaptureCAM_V4L* capture );
 
@@ -774,7 +772,7 @@ static int _capture_V4L2 (CvCaptureCAM_V4L *capture, char *deviceName)
    }
 
    /* starting from here, we assume we are in V4L2 mode */
-   V4L2_SUPPORT = 1;
+   capture->is_v4l2_device = 1;
 
    /* Init V4L2 control variables */
    capture->v4l2_brightness = 0;
@@ -833,10 +831,6 @@ static int _capture_V4L2 (CvCaptureCAM_V4L *capture, char *deviceName)
        fprintf( stderr, "HIGHGUI ERROR: V4L2: Could not obtain specifics of capture window.\n\n");
        icvCloseCAM_V4L(capture);
        return -1;
-   }
-
-   if (V4L2_SUPPORT == 0)
-   {
    }
 
    if (autosetup_capture_mode_v4l2(capture) == -1)
@@ -1113,13 +1107,13 @@ static CvCaptureCAM_V4L * icvCaptureFromCAM_V4L (int index)
    
    if (_capture_V4L2 (capture, deviceName) == -1) {
        icvCloseCAM_V4L(capture);
-       V4L2_SUPPORT = 0;
+       capture->is_v4l2_device = 0;
        if (_capture_V4L (capture, deviceName) == -1) {
            icvCloseCAM_V4L(capture);
            return NULL;
        }
    } else {
-       V4L2_SUPPORT = 1;
+       capture->is_v4l2_device = 1;
    }
 
    return capture;
@@ -1218,7 +1212,7 @@ static int icvGrabFrameCAM_V4L(CvCaptureCAM_V4L* capture) {
       /* This is just a technicality, but all buffers must be filled up before any
          staggered SYNC is applied.  SO, filler up. (see V4L HowTo) */
 
-      if (V4L2_SUPPORT == 1)
+      if (capture->is_v4l2_device == 1)
       {
 
         for (capture->bufferIndex = 0;
@@ -1269,7 +1263,7 @@ static int icvGrabFrameCAM_V4L(CvCaptureCAM_V4L* capture) {
       }
       
 #if defined(V4L_ABORT_BADJPEG) && defined(HAVE_CAMV4L2)
-     if (V4L2_SUPPORT == 1)
+     if (capture->is_v4l2_device == 1)
      {
         // skip first frame. it is often bad -- this is unnotied in traditional apps,
         //  but could be fatal if bad jpeg is enabled
@@ -1281,7 +1275,7 @@ static int icvGrabFrameCAM_V4L(CvCaptureCAM_V4L* capture) {
       capture->FirstCapture = 0;
    }
 
-   if (V4L2_SUPPORT == 1)
+   if (capture->is_v4l2_device == 1)
    {
 
      mainloop_v4l2(capture);
@@ -2050,7 +2044,7 @@ int sonix_decompress(int width, int height, unsigned char *inp, unsigned char *o
 
 static IplImage* icvRetrieveFrameCAM_V4L( CvCaptureCAM_V4L* capture) {
 
-  if (V4L2_SUPPORT == 0)
+  if (capture->is_v4l2_device == 0)
   {
 
     /* [FD] this really belongs here */
@@ -2064,7 +2058,7 @@ static IplImage* icvRetrieveFrameCAM_V4L( CvCaptureCAM_V4L* capture) {
 
    /* First, reallocate imageData if the frame size changed */
 
-  if (V4L2_SUPPORT == 1)
+  if (capture->is_v4l2_device == 1)
   {
 
     if(((unsigned long)capture->frame.width != capture->form.fmt.pix.width)
@@ -2092,7 +2086,7 @@ static IplImage* icvRetrieveFrameCAM_V4L( CvCaptureCAM_V4L* capture) {
  
   }
 
-  if (V4L2_SUPPORT == 1)
+  if (capture->is_v4l2_device == 1)
   {
 
     if (PALETTE_BGR24 == 1)
@@ -2206,7 +2200,7 @@ static IplImage* icvRetrieveFrameCAM_V4L( CvCaptureCAM_V4L* capture) {
 static double icvGetPropertyCAM_V4L (CvCaptureCAM_V4L* capture,
                                      int property_id ) {
 
-  if (V4L2_SUPPORT == 1)
+  if (capture->is_v4l2_device == 1)
   {
 
       /* default value for min and max */
@@ -2365,7 +2359,7 @@ static double icvGetPropertyCAM_V4L (CvCaptureCAM_V4L* capture,
 
 static int icvSetVideoSize( CvCaptureCAM_V4L* capture, int w, int h) {
 
-  if (V4L2_SUPPORT == 1)
+  if (capture->is_v4l2_device == 1)
   {
 
     CLEAR (capture->crop);
@@ -2465,7 +2459,7 @@ static int icvSetControl (CvCaptureCAM_V4L* capture,
     value = 1.0;
   }
 
-  if (V4L2_SUPPORT == 1)
+  if (capture->is_v4l2_device == 1)
   {
 
     /* default value for min and max */
@@ -2666,7 +2660,7 @@ static void icvCloseCAM_V4L( CvCaptureCAM_V4L* capture ){
    if (capture)
    {
 
-     if (V4L2_SUPPORT == 0)
+     if (capture->is_v4l2_device == 0)
      {
 
        if (capture->mmaps)
