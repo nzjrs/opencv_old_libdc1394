@@ -1,5 +1,7 @@
 *Makefile
 *Makefile.in
+*.o
+*.a
 *.lo
 *.la
 *~
@@ -24,3 +26,7 @@ autotools/config.sub
 autotools/ltmain.sh
 configure
 cvconfig.h.in
+apps/haartraining/src/opencv-createsamples
+apps/haartraining/src/opencv-haartraining
+apps/haartraining/src/opencv-performance
+
