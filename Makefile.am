@@ -4,7 +4,7 @@
 AM_CXXFLAGS=@DEF_CXXFLAGS@
 
 # tell make where aclocal finds its files in Maintainer Mode 
-ACLOCAL_AMFLAGS = -I ./autotools/aclocal
+ACLOCAL_AMFLAGS = -I autotools/aclocal
 
 SUBDIRS = cxcore cv cvaux ml otherlibs utils interfaces
 
