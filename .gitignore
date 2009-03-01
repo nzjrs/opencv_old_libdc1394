@@ -1,4 +1,5 @@
 *Makefile
+*Makefile.in
 *.lo
 *.la
 *~
@@ -17,3 +18,9 @@ opencv.pc
 opencv.spec
 *.deb
 stamp-h1
+INSTALL
+autotools/config.guess
+autotools/config.sub
+autotools/ltmain.sh
+configure
+cvconfig.h.in
