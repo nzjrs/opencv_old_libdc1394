@@ -112,6 +112,10 @@ CvCapture * cvCreateCameraCapture_V4L( int index );
 CvCapture * cvCreateCameraCapture_DC1394( int index );
 #endif
 
+#ifdef HAVE_DC1394V2
+CvCapture * cvCreateCameraCapture_DC1394V2( unsigned long long int guid );
+#endif
+
 #ifdef HAVE_MIL
 CvCapture* cvCreateCameraCapture_MIL( int index );
 #endif
