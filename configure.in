@@ -1097,6 +1097,7 @@ ml/src/Makefile
 otherlibs/Makefile
 otherlibs/highgui/Makefile
 apps/Makefile
+apps/cvcaptest/Makefile
 apps/haartraining/Makefile
 apps/haartraining/include/Makefile
 apps/haartraining/src/Makefile

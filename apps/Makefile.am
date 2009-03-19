@@ -1,1 +1,1 @@
-SUBDIRS = haartraining
+SUBDIRS = haartraining cvcaptest
