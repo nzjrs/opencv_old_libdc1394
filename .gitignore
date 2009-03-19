@@ -24,6 +24,10 @@ INSTALL
 autotools/config.guess
 autotools/config.sub
 autotools/ltmain.sh
+autotools/depcomp
+autotools/install-sh
+autotools/missing
+autotools/mkinstalldirs
 configure
 cvconfig.h.in
 apps/haartraining/src/opencv-createsamples
