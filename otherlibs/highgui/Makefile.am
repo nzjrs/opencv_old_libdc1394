@@ -5,14 +5,15 @@ EXTRA_DIST = \
     cvcap_cmu.cpp cvcap_tyzx.cpp cvcap_vfw.cpp cvcap_mil.cpp     \
     cvcap_qt.cpp cvcap_dc1394.cpp cvcap_ffmpeg.cpp               \
     cvcap_v4l.cpp cvcap_xine.cpp cvcap_images.cpp                \
-    cvcap_unicap.cpp                                             \
+    cvcap_unicap.cpp cvcap_dc1394v2.cpp                          \
     window_carbon.cpp window_gtk.cpp window_w32.cpp              \
     grfmt_imageio.cpp
 
 INCLUDES = -I. -I$(top_srcdir)/cxcore/include \
     -I$(top_srcdir)/cv/include @GTHREAD_CFLAGS@ @GTK_CFLAGS@ \
     @GSTREAMER_CFLAGS@ @QUICKTIME_CFLAGS@ @CARBON_CFLAGS@    \
-    @UNICAP_PACKAGE_CFLAGS@ @UCIL_PACKAGE_CFLAGS@ @LIBV4L_CFLAGS@
+    @UNICAP_PACKAGE_CFLAGS@ @UCIL_PACKAGE_CFLAGS@            \
+    @LIBV4L_CFLAGS@ @DC1394V2_CFLAGS@
 
 noinst_HEADERS     = \
     _highgui.h bitstrm.h grfmt_base.h grfmt_bmp.h \
@@ -26,6 +27,12 @@ if BUILD_DC1394
 TMP_DC1394=cvcap_dc1394.cpp
 else
 TMP_DC1394=
+endif
+
+if BUILD_DC1394V2
+TMP_DC1394V2=cvcap_dc1394v2.cpp
+else
+TMP_DC1394V2=
 endif
 
 if BUILD_V4L
@@ -91,7 +98,7 @@ lib_highgui_la_SOURCES = \
     precomp.cpp utils.cpp cvcap.cpp cvcap_images.cpp window.cpp   \
     $(TMP_DC1394) $(TMP_V4L) $(TMP_FFMPEG) $(TMP_GSTREAMER)       \
     $(TMP_QT) $(TMP_XINE) $(TMP_GTK) $(TMP_CARBON) $(TMP_IMAGEIO) \
-    $(TMP_UNICAP)
+    $(TMP_UNICAP) $(TMP_DC1394V2)
 lib_highgui_la_LDFLAGS = -no-undefined @LDFLAGS@
 
 # real library
@@ -105,4 +112,5 @@ libhighgui_la_LIBADD  = \
     $(top_builddir)/cv/src/libcv.la         \
     @GTHREAD_LIBS@ @GTK_LIBS@ @GSTREAMER_LIBS@ @IMAGELIBS@ @FFMPEGLIBS@   \
     @IEEE1394LIBS@ @QUICKTIME_LIBS@ @CARBON_LIBS@ @XINE_LIBS@ @LTLIBOBJS@ \
-    @UNICAP_PACKAGE_LIBS@ @UCIL_PACKAGE_LIBS@ @LIBV4L_LIBS@
+    @UNICAP_PACKAGE_LIBS@ @UCIL_PACKAGE_LIBS@ @LIBV4L_LIBS@               \
+    @DC1394V2_LIBS@
