@@ -808,8 +808,9 @@ bool CvCaptureCAM_DC1394V2_CPP::setProperty( int propId, double value )
 //    return captureDC1394 ? icvSetPropertyCAM_DC1394( captureDC1394, propId, value ) != 0 : false;
 }
 
-CvCapture* cvCreateCameraCapture_DC1394( unsigned long long int guid )
+CvCapture* cvCreateCameraCapture_DC1394V2( unsigned long long int guid )
 {
+    printf("hello\n");
     return 0;
 //    CvCaptureCAM_DC1394V2_CPP* capture = new CvCaptureCAM_DC1394V2_CPP;
 //
