@@ -101,7 +101,7 @@ CV_IMPL CvCapture * cvCreateCameraCapture (int index)
 #ifdef HAVE_VIDEOINPUT
         CV_CAP_DSHOW,
 #endif
-		CV_CAP_IEEE1394,   // identical to CV_CAP_DC1394
+		CV_CAP_IEEE1394,   // identical to CV_CAP_DC1394,CV_CAP_CMU1394,CV_CAP_DC1394V2 
 		CV_CAP_STEREO,
 		CV_CAP_VFW,        // identical to CV_CAP_V4L
 		CV_CAP_MIL,
@@ -165,6 +165,11 @@ CV_IMPL CvCapture * cvCreateCameraCapture (int index)
 			break;
 
 		case CV_CAP_FIREWIRE:
+		#ifdef HAVE_DC1394V2
+			capture = cvCreateCameraCapture_DC1394V2 (index);
+			if (capture)
+				return capture;
+		#endif
 		#ifdef HAVE_DC1394
 			capture = cvCreateCameraCapture_DC1394 (index);
 			if (capture)

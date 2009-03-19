@@ -231,6 +231,7 @@ CVAPI(CvCapture*) cvCreateFileCapture( const char* filename );
 #define CV_CAP_IEEE1394 300
 #define CV_CAP_DC1394   300
 #define CV_CAP_CMU1394  300
+#define CV_CAP_DC1394V2 300
 
 #define CV_CAP_STEREO   400   // TYZX proprietary drivers
 #define CV_CAP_TYZX     400
