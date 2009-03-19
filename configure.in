@@ -185,6 +185,12 @@ AC_ARG_WITH([gthread],
             [with_gthread=$withval],
             [with_gthread=auto])
 
+# does the user want OpenCV to use libdc1394v2 for video input
+AC_ARG_WITH([dc1394v2],
+            [AS_HELP_STRING([--with-dc1394v2],[use dc1394v2 v2 [automatic]])],
+            [with_dc1394v2=$withval],
+            [with_dc1394v2=auto])
+
 ######################################################################
 # getting the code to compile
 
@@ -465,6 +471,9 @@ if test x"$with_quicktime" = "xyes"; then
     if test x"$with_1394libs" = "xyes"; then
         AC_MSG_ERROR([You cannot specify --with-quicktime and --with-1394libs at the same time])
     fi
+    if test x"$with_dc1394v2" = "xyes"; then
+        AC_MSG_ERROR([You cannot specify --with-quicktime and --with-dc1394v2 at the same time])
+    fi
     if test x"$with_v4l" = "xyes"; then
         AC_MSG_ERROR([You cannot specify --with-quicktime and --with-v4l at the same time])
     fi
@@ -490,6 +499,9 @@ if test x"$with_quicktime" = "xyes"; then
         fi
         if test x"$with_1394libs" = "xauto"; then
             with_1394libs=no
+        fi
+        if test x"$with_dc1394v2" = "xauto"; then
+            with_dc1394v2=no
         fi
         if test x"$with_v4l" = "xauto"; then
             with_v4l=no
@@ -687,6 +699,30 @@ else
 fi
 AC_SUBST(IEEE1394LIBS)
 AM_CONDITIONAL([BUILD_DC1394], [test x"$have_dc1394" = "xyes"])
+
+# libdc1394 v2
+if test x"$with_dc1394v2" = "xno"; then
+    have_dc1394v2=no
+else
+    # check if ./configure arguments are valid
+    if test x"$with_dc1394v2" = "xauto"; then
+       with_dc1394v2=yes
+    fi
+    if test x"$with_dc1394v2" = "xyes"; then
+        PKG_CHECK_MODULES(DC1394V2, "libdc1394-2",
+                          [
+                            have_dc1394v2=yes
+                            AC_DEFINE(HAVE_DC1394V2,,[dc1394 v2 library])
+                          ],
+                          [ have_dc1394v2=no ])
+
+    else
+        # if we get here then --with-dc1394v2 was not called with 'yes','no' or 'auto'
+        AC_MSG_WARN([unexpected arguments for option --with-dc1394v2, continuing assuming 'no'])
+        have_dc1394v2=no
+    fi
+fi
+AM_CONDITIONAL([BUILD_DC1394V2], [test x"$have_dc1394v2" = "xyes"])
 
 # Video for Linux (V4L)
 # we support version 1 and 2 currently
@@ -1119,6 +1155,7 @@ HighGUI configuration ================================================
     Use gstreamer:            ${have_gstreamer}
     Use ffmpeg:               ${have_ffmpeg}
     Use dc1394 & raw1394:     ${have_dc1394}
+    Use dc1394v2:             ${have_dc1394v2}
     Use v4l:                  ${have_v4l}
     Use v4l2:                 ${have_v4l2}
     Use unicap:               ${have_unicap}
