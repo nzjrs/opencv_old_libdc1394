@@ -45,10 +45,8 @@ int main( int argc, char* argv[] )
         for(;;)
         {
             frame = cvQueryFrame( capture );
-            if( !frame ) {
-                printf("sadf\n");
+            if( !frame )
                 break;
-            }
 
             cvShowImage( "result", frame );
 
