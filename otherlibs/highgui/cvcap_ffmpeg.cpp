@@ -1168,7 +1168,7 @@ bool CvVideoWriter_FFMPEG::open( const char * filename, int fourcc,
 #endif
     case CODEC_ID_FFV1:
         // no choice... other supported formats are YUV only
-        codec_pix_fmt = PIX_FMT_RGBA32;
+        codec_pix_fmt = PIX_FMT_RGB32;
         break;
 	case CODEC_ID_MJPEG:
 	case CODEC_ID_LJPEG:
