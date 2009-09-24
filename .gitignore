@@ -34,3 +34,4 @@ apps/haartraining/src/opencv-createsamples
 apps/haartraining/src/opencv-haartraining
 apps/haartraining/src/opencv-performance
 
+apps/cvcaptest/opencv-cvcap
