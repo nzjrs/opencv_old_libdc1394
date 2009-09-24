@@ -127,7 +127,7 @@ bool CvCapture_DC1394V2::initDevice( int index )
 
     //Find the selected camera
     for (i = 0; i < list->num; i++) {
-        dc1394camera_t *camera = dc1394_camera_new (dc1394, list->ids[0].guid);
+        dc1394camera_t *camera = dc1394_camera_new (dc1394, list->ids[i].guid);
         if (camera) {
             dc1394_camera_print_info(camera, stdout);
             if (i == index) {
