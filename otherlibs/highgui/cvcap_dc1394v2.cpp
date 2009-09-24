@@ -12,6 +12,9 @@
         return false;                           \
     }                                           \
 
+#define DEFAULT_VIDEO_MODE      DC1394_VIDEO_MODE_640x480_MONO8
+#define DEFAULT_FRAMERATE       DC1394_FRAMERATE_30
+
 static unsigned int num_cameras = 0;
 static dc1394_t *dc1394 = 0;
 
@@ -144,13 +147,13 @@ bool CvCapture_DC1394V2::initDevice( int index )
         err=dc1394_camera_reset(m_camera);
         DC1394_RETURN_IF_ERR(err, "Could not reset camera");
 
-        err=dc1394_video_set_mode(m_camera, DC1394_VIDEO_MODE_640x480_MONO8);
+        err=dc1394_video_set_mode(m_camera, DEFAULT_VIDEO_MODE);
         DC1394_RETURN_IF_ERR(err,"Could not set video mode");
 
         err=dc1394_capture_setup(m_camera, 4, DC1394_CAPTURE_FLAGS_DEFAULT);
         DC1394_RETURN_IF_ERR(err,"Could not setup camera - make sure that the video mode is supported by your camera");
 
-        err=dc1394_video_set_framerate(m_camera, DC1394_FRAMERATE_30);
+        err=dc1394_video_set_framerate(m_camera, DEFAULT_FRAMERATE);
         DC1394_RETURN_IF_ERR(err,"Could not set framerate");
 
         err=dc1394_video_set_transmission(m_camera, DC1394_ON);
