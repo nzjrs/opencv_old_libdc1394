@@ -17,6 +17,8 @@
 #define DEFAULT_FRAMERATE       DC1394_FRAMERATE_30
 #define DEFAULT_COLOR_CODING    DC1394_COLOR_CODING_RAW8
 
+#define USE_COLOUR              1
+
 static unsigned int num_cameras = 0;
 static dc1394_t *dc1394 = 0;
 
@@ -201,10 +203,13 @@ bool CvCapture_DC1394V2::initDevice( int index )
     }
     dc1394_camera_free_list (list);
 
+#if USE_COLOUR
+    // Color (640x480, F7)
+    m_initialized = initFrame(DC1394_VIDEO_MODE_FORMAT7_0, DC1394_COLOR_CODING_RAW8);
+#else
     // B&W
     m_initialized = initFrame(DEFAULT_VIDEO_MODE, DEFAULT_COLOR_CODING);
-    // Color (640x480, F7)
-    //m_initialized = initFrame(DC1394_VIDEO_MODE_FORMAT7_0, DC1394_COLOR_CODING_RAW8);
+#endif
 
     return m_initialized;
 }
