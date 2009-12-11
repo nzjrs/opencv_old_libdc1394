@@ -99,6 +99,9 @@ bool CvCapture_DC1394V2::initFrame(dc1394video_mode_t video_mode, dc1394color_co
     err=dc1394_camera_reset(m_camera);
     DC1394_RETURN_IF_ERR(err, "Could not reset camera");
 
+    err = dc1394_video_set_iso_speed(m_camera, DC1394_ISO_SPEED_200);
+    DC1394_RETURN_IF_ERR(err,"Could not setup camera ISO speed");
+
     dc1394_get_image_size_from_video_mode(m_camera, video_mode, &w, &h);
 
     if ( video_mode == DC1394_VIDEO_MODE_640x480_MONO8 ) {
