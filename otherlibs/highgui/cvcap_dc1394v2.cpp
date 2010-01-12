@@ -17,7 +17,7 @@
 #define DEFAULT_FRAMERATE       DC1394_FRAMERATE_30
 #define DEFAULT_COLOR_CODING    DC1394_COLOR_CODING_RAW8
 
-#define USE_COLOUR              1
+#define USE_COLOUR              0
 
 static unsigned int num_cameras = 0;
 static dc1394_t *dc1394 = 0;
